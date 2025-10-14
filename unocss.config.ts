@@ -3,9 +3,10 @@ import { defineConfig } from "unocss";
 import { transformerVariantGroup } from "unocss";
 import { presetIcons } from "unocss";
 import { presetMini } from "unocss";
-import { presetDaisy } from "unocss-preset-daisyui-next";
 import { presetWebFonts } from "unocss";
 import { createLocalFontProcessor } from "@unocss/preset-web-fonts/local";
+import { presetDaisyui } from "@0x-jerry/unocss-preset-daisyui";
+
 export default defineConfig({
   rules: [
     ["capitalize", { "text-transform": "capitalize" }],
@@ -13,8 +14,8 @@ export default defineConfig({
   ],
   presets: [
     presetMini(),
+    presetDaisyui(),
     presetIcons(),
-    presetDaisy(),
     presetWebFonts({
       provider: "bunny",
       fonts: {
