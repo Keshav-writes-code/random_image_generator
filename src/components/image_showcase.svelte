@@ -19,6 +19,8 @@
     progress = 0,
     fadingPixels = [];
 
+  let hasImage = $state(false);
+
   let image_urls = $derived.by(() => {
     return Array.from({ length: IMAGE_COUNT }).map(
       (_, i) => `${base}/image/${resolution}/${i}.jpg`,
@@ -92,6 +94,7 @@
       canvas.height = height;
       ctx.drawImage(img, 0, 0);
       imgData = ctx.getImageData(0, 0, width, height);
+      hasImage = true;
       startReveal();
     };
   }
@@ -100,7 +103,6 @@
     canvas = document.getElementById("revealCanvas");
     ctx = canvas.getContext("2d", { willReadFrequently: true });
     ctx.imageSmoothingEnabled = false;
-    loadImage();
   });
 </script>
 
@@ -121,7 +123,12 @@
       >Generate <div class="i-tabler:wand size-6"></div>
     </button>
   </div>
-  <div class="aspect-square border rounded shadow flex h-full">
+  <div class="aspect-square border rounded shadow flex h-full relative">
+    {#if !hasImage}
+      <div class="absolute inset-0 flex items-center justify-center text-center p-4 text-base-content/60">
+        Click Generate to generate an image
+      </div>
+    {/if}
     <canvas
       id="revealCanvas"
       class=" w-full"
