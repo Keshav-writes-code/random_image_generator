@@ -3,12 +3,7 @@ import UnoCSS from "unocss/astro";
 import svelte from "@astrojs/svelte";
 
 export default defineConfig({
-  integrations: [
-    UnoCSS({
-      injectReset: true,
-    }),
-    svelte(),
-  ],
+  integrations: [UnoCSS({}), svelte()],
   site: "https://Keshav-writes-code.github.io",
   base: "random_image_generator",
 });
