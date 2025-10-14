@@ -1,17 +1,21 @@
 ---
 import Counter from "../components/image_showcase.svelte";
 import { base } from "astro:config/client"
-let image_urls = Array.from({length: 5}).map((_,i)=>`${base}/photo_${i+1}.jpg`)
+import { IMAGE_COUNT } from "@/constants";
+import "daisyui/theme/dark.css";
+
+let image_urls = Array.from({length: IMAGE_COUNT}).map((_,i)=>`${base}/image/${i}.jpg`)
+
 ---
 
-<html lang="en">
+<html lang="en" data-theme="dark" >
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<body class="grid place-items-center h-screen" >
+	<body class="grid place-items-center h-screen p-13" >
     <Counter client:load image_urls={image_urls} />
 	</body>
 </html>
