@@ -1,1 +1,1 @@
-export const IMAGE_COUNT = 1000;
+export const IMAGE_COUNT = 100;
