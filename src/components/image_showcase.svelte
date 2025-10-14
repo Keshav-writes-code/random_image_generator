@@ -1,5 +1,9 @@
 <script>
   import { onMount } from "svelte";
+  import { base } from "astro:config/client";
+  import { IMAGE_COUNT } from "@/constants";
+  let resolution = $state(50);
+  let res_stops = [50, 100, 500];
 
   let canvas, ctx, img, imgData;
   let width = 0,
@@ -14,7 +18,13 @@
   let revealOrder = [],
     progress = 0,
     fadingPixels = [];
-  let { image_urls } = $props();
+
+  let image_urls = $derived.by(() => {
+    return Array.from({ length: IMAGE_COUNT }).map(
+      (_, i) => `${base}/image/${resolution}/${i}.jpg`,
+    );
+  });
+  $inspect(image_urls);
 
   function prepareReveal() {
     revealOrder = [];
@@ -90,14 +100,32 @@
     canvas = document.getElementById("revealCanvas");
     ctx = canvas.getContext("2d", { willReadFrequently: true });
     ctx.imageSmoothingEnabled = false;
+    loadImage();
   });
 </script>
 
-<div class="flex flex-col gap-2 h-full w-full items-center">
-  <input type="color" bind:value={coverColor} on:input={loadImage} />
-  <canvas
-    id="revealCanvas"
-    class="border rounded shadow h-full max-w-full"
-    style="image-rendering: pixelated;"
-  />
+<div class="flex justify-around relative h-full w-full items-center">
+  <div class="w-60 flex flex-col">
+    <label class="label">Color</label>
+    <input type="color" class="w-full h-20" bind:value={coverColor} />
+    <label class="label mt-4">Resolution</label>
+    <label class="input input-xl w-full">
+      <select class="select b-0 outline-0 select-lg" bind:value={resolution}>
+        {#each res_stops as stop}
+          <option value={stop}>{stop}</option>
+        {/each}
+      </select>
+      <span class="badge badge-neutral badge-lg">px</span>
+    </label>
+    <button class="btn btn-xl btn-neutral mt-10 gap-4" onclick={loadImage}
+      >Generate <div class="i-tabler:wand size-6"></div>
+    </button>
+  </div>
+  <div class="aspect-square border rounded shadow flex h-full">
+    <canvas
+      id="revealCanvas"
+      class=" w-full"
+      style="image-rendering: pixelated;"
+    />
+  </div>
 </div>
