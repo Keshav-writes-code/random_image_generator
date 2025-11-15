@@ -1,7 +1,7 @@
 <script>
-  import { onMount } from "svelte";
-  import { base } from "astro:config/client";
   import { IMAGE_COUNT } from "@/constants";
+  import { base } from "astro:config/client";
+  import { onMount } from "svelte";
   let resolution = $state(50);
   let res_stops = [50, 100, 500];
 
@@ -23,7 +23,7 @@
 
   let image_urls = $derived.by(() => {
     return Array.from({ length: IMAGE_COUNT }).map(
-      (_, i) => `${base}/image/${resolution}/${i}.jpg`,
+      (_, i) => `${base}image/${resolution}/${i}.jpg`,
     );
   });
   $inspect(image_urls);
@@ -125,7 +125,9 @@
   </div>
   <div class="aspect-square border rounded shadow flex h-full relative">
     {#if !hasImage}
-      <div class="absolute inset-0 flex items-center justify-center text-center p-4 text-base-content/60">
+      <div
+        class="absolute inset-0 flex items-center justify-center text-center p-4 text-base-content/60"
+      >
         Click Generate to generate an image
       </div>
     {/if}

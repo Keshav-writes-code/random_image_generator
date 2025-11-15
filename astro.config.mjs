@@ -4,6 +4,4 @@ import svelte from "@astrojs/svelte";
 
 export default defineConfig({
   integrations: [UnoCSS({}), svelte()],
-  site: "https://Keshav-writes-code.github.io",
-  base: "random_image_generator",
 });
